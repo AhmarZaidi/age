@@ -1,4 +1,4 @@
-module github.com/apache/age
+module github.com/AhmarZaidi/go-crud-with-frontend
 
 go 1.18
 
