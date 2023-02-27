@@ -228,7 +228,7 @@ a[data-toggle="collapse"] {
     resize: vertical;
     overflow: auto;
     height:auto;
-    display: flex;
+    /* display: flex; */
 }
 
 .editor-button-wrapper {
@@ -370,7 +370,7 @@ a[data-toggle="collapse"] {
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 1130px) {
+@media (max-width: 800px) {
     #sidebarCollapse span {
         display: none;
     }
@@ -404,7 +404,7 @@ a[data-toggle="collapse"] {
 
 }
 
-@media (max-width: 1190px) {
+@media (max-width: 800px) {
     #content.active {
         width: calc(100% - 320px);
     }

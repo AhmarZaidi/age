@@ -1,19 +1,25 @@
-# README
+<br>
 
-## About
+<p align="center">
+     <img src="https://age.apache.org/age-manual/master/_static/logo.png" width="30%" height="30%">
+<br>
 
-This is the official Wails React template.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+</br>
+<img src="https://img.shields.io/badge/Viewer-in%20GO-green"" height="25" height="30% alt="Apache AGE">
+</p>
+<br>
 
-## Live Development
+# Apache AGE-Viewer in Golang
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+<h3 align="center">
+    <a href="https://age.apache.org/age-manual/master/_static/logo.png" target="_blank">
+        <img src="https://age.apache.org/age-manual/master/_static/logo.png"" height="25" height="30% alt="Apache AGE">
+</h3>
+<p>
+Visualize graph data generated using Apache AGE with Apache AGE Viewer application.
+</p>
+<h2>Connect to database</h2>
+<img src="https://user-images.githubusercontent.com/67288224/217324853-2755019a-bb3a-435d-8eb5-c48fc18df9ce.png"/>
+<h2>Create a query and analyze graph data</h2>
+<img src="https://user-images.githubusercontent.com/67288224/217334417-ff6e51ce-de51-46d5-bf32-098974967e33.gif"/>

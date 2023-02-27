@@ -1,22 +1,4 @@
-// import {useState} from 'react';
-import logo from './assets/images/logo-universal.png';
 import './App.css';
-
-
-// function App() {
-
-//     return (
-//         <div id="App">
-//             <div>
-//                 <img src={logo} id="logo" alt="logo"/>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default App;
-
-// #########################################################################
 
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,9 +12,9 @@ import './App.css';
 function App() {
     return(
         <div id="App">
-            {/* <React.StrictMode> */}
+            <React.StrictMode>
                 <MainPage />
-            {/* </React.StrictMode> */}
+            </React.StrictMode>
         </div>
     )
 }

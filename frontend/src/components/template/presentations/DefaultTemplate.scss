@@ -6,8 +6,9 @@
     display: flex;
     justify-items: space-evenly;
     margin:2px 2px 2px 2px;
+    height: 100%;
 }
 .row{
     flex-wrap: nowrap;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 }
