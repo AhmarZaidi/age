@@ -27,7 +27,7 @@ export const getMetaData = createAsyncThunk(
   async (arg) => {
     console.log("Cookies MetadataSlice.js: ", cookies);
     try {
-      const response = await fetch('http://localhost:8080/query/metadata',
+      const response = await fetch('http://localhost:8081/query/metadata',
         {
           method: 'POST',
           headers: {

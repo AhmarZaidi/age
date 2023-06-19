@@ -26,7 +26,7 @@ let cookies;
 
 function connect() {
   console.log("CONNECT:")
-  fetch('http://localhost:8080/connect', {
+  fetch('http://localhost:8081/connect', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ function status() {
 
 function queryMetadata() {
   console.log("METADATA:")
-  fetch('http://localhost:8080/query/metadata', {
+  fetch('http://localhost:8081/query/metadata', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
