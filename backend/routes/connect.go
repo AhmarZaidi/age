@@ -4,7 +4,7 @@ import (
 	"age-viewer-go/models"
 	"fmt"
 	"net/http"
-	
+
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
 )
@@ -95,6 +95,10 @@ func DisconnectFromDb(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(500, "error saving session")
 	}
+
+	// Enable CORS for all origins
+	c.Response().Header().Set("Access-Control-Allow-Origin", "*")
+
 	return c.JSON(200, map[string]string{"status": "disconnected"})
 }
 
@@ -115,4 +119,3 @@ func StatusDB(c echo.Context) error {
 
 	return c.JSON(200, dbObj)
 }
-

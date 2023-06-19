@@ -22,23 +22,84 @@ import uuid from 'react-uuid';
 
 import { cookies } from './DatabaseSlice';
 
+function convertObject(inputObject) {
+  const convertedObject = {};
+
+  // Extracting the dynamic graph name
+  const graphName = Object.keys(inputObject.Graphs)[0];
+  const graphData = inputObject.Graphs[graphName];
+  const graphId = inputObject.Graphs.Id;
+
+  // Creating 'nodes' array in the converted object
+  convertedObject[graphName] = {
+      nodes: [],
+      edges: [],
+      propertyKeys: [],
+      graph: graphName,
+      database: "postgresDB",
+      role: {
+          user_name: "postgresUser",
+          role_name: "admin"
+      },
+      id: graphId
+  };
+
+  // Converting 'Nodes'
+  graphData.Nodes.forEach((node, index) => {
+      const convertedNode = {
+          label: node.Label,
+          namespace_id: node.Namespace_id,
+          cnt: node.Cnt,
+          name: node.Label,
+          namespace: node.NameSpace,
+          graph: parseInt(node.Graph),
+          id: index + 2,
+          kind: node.Kind,
+          relation: node.Relation
+      };
+      convertedObject[graphName].nodes.push(convertedNode);
+  });
+
+  // Converting 'Edges'
+  graphData.Edges.forEach((edge, index) => {
+      const convertedEdge = {
+          label: edge.Label,
+          namespace_id: edge.Namespace_id,
+          cnt: edge.Cnt,
+          name: edge.Label,
+          namespace: edge.NameSpace,
+          graph: parseInt(edge.Graph),
+          id: index + 3,
+          kind: edge.Kind,
+          relation: edge.Relation
+      };
+      convertedObject[graphName].edges.push(convertedEdge);
+  })
+
+  return convertedObject;
+}
+
 export const getMetaData = createAsyncThunk(
   'database/getMetaData',
   async (arg) => {
-    console.log("Cookies MetadataSlice.js: ", cookies);
+    // console.log("Cookies MetadataSlice.js: ", cookies);
     try {
-      const response = await fetch('http://localhost:8081/query/metadata',
+      // const response = await fetch('http://localhost:8081/query/metadata',
+      const response = await fetch('/api/query/metadata',
         {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'Cookie': cookies,
+            // 'Cookie': cookies,
           },
           body: JSON.stringify(arg),
         });
       if (response.ok) {
-        const ret = await response.json();
+        const retVal = await response.json();
+        // console.log("MetadataSlice.js before: ", ret);
+        const ret = convertObject(retVal);
+        // console.log("MetadataSlice.js before: ", ret);
         Object.keys(ret).forEach((gname) => {
           let allCountEdge = 0;
           let allCountNode = 0;
@@ -53,6 +114,7 @@ export const getMetaData = createAsyncThunk(
           ret[gname].Edges?.unshift({ Label: '*', Cnt: allCountEdge });
           ret[gname].id = uuid();
         });
+        // console.log("MetadataSlice.js after: ", ret);
         return ret;
       }
       throw response;

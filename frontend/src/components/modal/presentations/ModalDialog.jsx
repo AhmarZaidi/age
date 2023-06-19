@@ -34,7 +34,7 @@ const ModalDialog = ({
   const dispatch = useDispatch();
 
   const removeNode = () => {
-    fetch('/api/v1/cypher',
+    fetch('/api/query',
       {
         method: 'POST',
         headers: {
