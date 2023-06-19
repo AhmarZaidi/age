@@ -4,7 +4,7 @@ import (
 	"age-viewer-go/models"
 	"fmt"
 	"net/http"
-
+	
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
 )
@@ -16,6 +16,7 @@ containing the host, postgres version, port, database, user, password, list of g
 and current graph. It handles errors related to invalid data, connection establishment, and session saving.
 */
 func ConnectToDb(c echo.Context) error {
+
 	udata, err := models.FromRequestBody(c)
 
 	if err != nil {
@@ -30,9 +31,6 @@ func ConnectToDb(c echo.Context) error {
 		return echo.NewHTTPError(400, fmt.Sprintf("could not establish connection due to %s", err.Error()))
 	}
 	defer db.Close()
-	sess := c.Get("database").(*sessions.Session)
-
-	sess.Values["db"] = udata
 
 	// Call GetGraphNamesFromDB from the models package to retrieve
 	// the graph names and the first graph name from the database.
@@ -41,12 +39,29 @@ func ConnectToDb(c echo.Context) error {
 		return echo.NewHTTPError(400, fmt.Sprintf("could not retrieve graph names due to %s", err.Error()))
 	}
 
+	udata.Graphs = graphNames
+	udata.Graph = firstGraphName
+
+	sess := c.Get("database").(*sessions.Session)
+	sess.Values["db"] = udata
+
 	err = sess.Save(c.Request(), c.Response().Writer)
 	if err != nil {
 		return echo.NewHTTPError(400, "could not save session")
 	}
-	udata.Graphs = graphNames
-	udata.Graph = firstGraphName
+
+	// Retrieve the value of the 'Set-Cookie' header
+	setCookie := c.Response().Header().Get("Set-Cookie")
+	if setCookie != "" {
+		// Set the value of the 'Set-Cookie' header as a custom header
+		c.Response().Header().Set("Custom-Set-Cookie", setCookie)
+
+		// Enable CORS to allow the custom header to be accessed from the frontend
+		c.Response().Header().Set("Access-Control-Expose-Headers", "Custom-Set-Cookie")
+	}
+
+	// Enable CORS for all origins
+	c.Response().Header().Set("Access-Control-Allow-Origin", "*")
 
 	return c.JSON(200, udata)
 }
@@ -100,3 +115,4 @@ func StatusDB(c echo.Context) error {
 
 	return c.JSON(200, dbObj)
 }
+

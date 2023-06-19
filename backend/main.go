@@ -29,5 +29,5 @@ func main() {
 	cypher.Use(m.ValidateContentTypeMiddleWare)
 	cypher.POST("/metadata", routes.GraphMetaData)
 	cypher.POST("", routes.Cypher)
-	app.Start(":8080")
+	app.Start(":8081")
 }

@@ -1,20 +1,20 @@
 // some pre-requisites to run these functions on desktop enviroment
-const fetch = require("node-fetch");
-const readline = require("readline");
+import fetch from "node-fetch";
+import { createInterface } from "readline";
 
 
-const rl = readline.createInterface({
+const rl = createInterface({
     input: process.stdin,
     output: process.stdout
   });
 
 // Test data which will come from the frontend
 const conn = {
-  port: 5432,
+  port: 5455,
   host: "localhost",
-  password: "Welcome@1",
-  user: "kamleshk",
-  dbname: "testdb",
+  password: "postgresPW",
+  user: "postgresUser",
+  database: "postgresDB",
   ssl: "disable",
   graph_init: true,
   version: 11,
@@ -25,6 +25,7 @@ const conn = {
 let cookies;
 
 function connect() {
+  console.log("CONNECT:")
   fetch('http://localhost:8080/connect', {
     method: 'POST',
     headers: {
@@ -36,7 +37,14 @@ function connect() {
     console.log(response.status);
 
     // Store the cookies from the response
-    cookies = response.headers.raw()['set-cookie'];
+    console.log("resp headers raw: ", response.headers)
+    // console.log("cookie: ", response.headers.raw()['custom-set-cookie'])
+    cookies = response.headers.raw()['custom-set-cookie'];
+    console.log("cookie: ", cookies)
+    console.log("cookie type: ", typeof cookies)
+    
+    console.log("cookies[0]: ", cookies[0])
+    console.log("cookie type: ", typeof (cookies[0]))
 
     return response.json();
   })
@@ -48,7 +56,30 @@ function connect() {
   });
 }
 
+function status() {
+  console.log("STATUS:")
+  fetch('http://localhost:8081/status', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': cookies[0],
+    },
+  })
+  .then(response => {
+    console.log(response.status);
+    return response.json();
+  })
+  .then(data => {
+    // visualize the data in formatted ways
+    console.log(JSON.stringify(data, null, 2));
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
 function queryMetadata() {
+  console.log("METADATA:")
   fetch('http://localhost:8080/query/metadata', {
     method: 'POST',
     headers: {
@@ -71,11 +102,12 @@ function queryMetadata() {
 
 
 function query() {
+  console.log("QUERY:")
   const payload = {
-    query: "SELECT * FROM cypher('demo_graph', $$ MATCH (v) RETURN v $$) as (v agtype);",
+    query: "SELECT * from cypher('demo', $$ MATCH (V:node) RETURN V $$) as (V agtype);",
   };
 
-  fetch('http://localhost:8080/query', {
+  fetch('http://localhost:8081/query', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -97,7 +129,7 @@ function query() {
 }
 
 function disconnect() {
-  fetch('http://localhost:8080/disconnect', {
+  fetch('http://localhost:8081/disconnect', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -123,7 +155,7 @@ function disconnect() {
 let choice;
 function chooseFunction() {  
 
-rl.question('Enter the function number: ', (input) => {
+rl.question('Enter the function number: [1->connect], [2->status], [3->metadata], [4->query], [5->disconnect] ', (input) => {
     const choice = parseInt(input);
     if (Number.isNaN(choice) || choice < 1 || choice > 4) {
       console.log('Invalid choice. Please try again.');
@@ -133,12 +165,15 @@ rl.question('Enter the function number: ', (input) => {
           connect();
           break;
         case 2:
-          queryMetadata();
+          status();
           break;
         case 3:
-          query();
+          queryMetadata();
           break;
         case 4:
+          query();
+          break;
+        case 5:
           disconnect();
           break;
       }

@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     edges: currentGraphData.Edges,
     nodes: currentGraphData.Nodes,
     propertyKeys: currentGraphData.propertyKeys,
-    dbname: state.metadata.dbname,
+    database: state.metadata.database,
     status: state.metadata.status,
     role: currentGraphData.role,
     command: state.editor.command,

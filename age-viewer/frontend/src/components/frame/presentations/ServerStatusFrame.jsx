@@ -76,7 +76,7 @@ const ServerStatusFrame = ({
                 </p>
                 <p>
                   Graph path has been set to&nbsp;
-                  <strong>{graph}</strong>
+                  <strong>{graph[0]}</strong>
                 </p>
               </Col>
               <Col>
@@ -145,10 +145,10 @@ ServerStatusFrame.propTypes = {
   reqString: PropTypes.string.isRequired,
   serverInfo: PropTypes.shape({
     host: PropTypes.string,
-    port: PropTypes.string,
+    port: PropTypes.number,
     user: PropTypes.string,
     database: PropTypes.string,
-    graph: PropTypes.string,
+    graph: PropTypes.array,
     status: PropTypes.string,
   }).isRequired,
   // eslint-disable-next-line react/forbid-prop-types

@@ -19,12 +19,14 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+export var cookies;
+
 export const connectToDatabase = createAsyncThunk(
   'database/connectToDatabase',
   async (formData) => {
     formData.port = parseInt(formData.port);
     const appendForm = {
-      ssl: 'disbale',
+      ssl: 'disable',
       graph_init: false,
       version: 11,
     };
@@ -42,6 +44,7 @@ export const connectToDatabase = createAsyncThunk(
       });
       if (response.ok) {
         console.log(response);
+        cookies = response.headers.get('Custom-Set-Cookie'); // Save the cookies from the response
         return await response.json();
       }
       throw response;
@@ -60,7 +63,24 @@ export const connectToDatabase = createAsyncThunk(
 export const disconnectToDatabase = createAsyncThunk(
   'database/disconnectToDatabase',
   async () => {
-    await fetch('http://localhost:3001/api/v1/db/disconnect');
+    fetch('http://localhost:8081/disconnect', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': cookies, // Send the cookies from the previous connection
+      },
+    })
+      .then(response => {
+        console.log(response.status);
+        cookies = ""; // Clear the cookies variable
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 );
 
@@ -68,7 +88,13 @@ export const getConnectionStatus = createAsyncThunk(
   'database/getConnectionStatus',
   async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/v1/db');
+      const response = await fetch('http://localhost:8080/status', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': cookies,
+        },
+      })
       if (response.ok) {
         return await response.json();
       }

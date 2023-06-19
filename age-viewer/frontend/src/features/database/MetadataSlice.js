@@ -20,16 +20,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import uuid from 'react-uuid';
 
+import { cookies } from './DatabaseSlice';
+
 export const getMetaData = createAsyncThunk(
   'database/getMetaData',
   async (arg) => {
+    console.log("Cookies MetadataSlice.js: ", cookies);
     try {
-      const response = await fetch('http://localhost:3001/api/v1/db/meta',
+      const response = await fetch('http://localhost:8080/query/metadata',
         {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'Cookie': cookies,
           },
           body: JSON.stringify(arg),
         });

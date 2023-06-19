@@ -14,7 +14,7 @@ type Connection struct {
 	Host      string
 	Password  string
 	User      string
-	DbName    string
+	Database  string
 	SSL       string `default:"require"`
 	GraphInit bool
 	Version   int
@@ -43,13 +43,13 @@ func (c *Connection) ToSQLString(secure ...string) string {
 	}
 
 	str := fmt.Sprintf(
-		"user=%s port=%d host=%s password=%s sslmode=%s dbname=%s",
+		"user=%s port=%d host=%s password=%s sslmode=%s database=%s",
 		c.User,
 		c.Port,
 		c.Host,
 		c.Password,
 		c.SSL,
-		c.DbName,
+		c.Database,
 	)
 
 	return str
