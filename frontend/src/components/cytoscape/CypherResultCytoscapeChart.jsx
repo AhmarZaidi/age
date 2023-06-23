@@ -214,7 +214,7 @@ const CypherResultCytoscapeCharts = ({
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                  cmd: `SELECT * FROM cypher('${graph}', $$ MATCH (S)-[R]-(T) WHERE id(S) = ${ele.id()} RETURN S, R, T $$) as (S agtype, R agtype, T agtype);`,
+                  query: `SELECT * FROM cypher('${graph}', $$ MATCH (S)-[R]-(T) WHERE id(S) = ${ele.id()} RETURN S, R, T $$) as (S agtype, R agtype, T agtype);`,
                 }),
               })
                 .then((res) => res.json())

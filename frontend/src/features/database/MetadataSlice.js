@@ -20,7 +20,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import uuid from 'react-uuid';
 
-import { cookies } from './DatabaseSlice';
+// import { cookies } from './DatabaseSlice';
 
 function convertObject(inputObject) {
   const convertedObject = {};

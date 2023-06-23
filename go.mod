@@ -2,14 +2,10 @@ module github.com/apache/age
 
 go 1.18
 
-require (
-	github.com/labstack/echo v3.3.10+incompatible
-	github.com/wailsapp/wails/v2 v2.4.0
-)
+require github.com/wailsapp/wails/v2 v2.4.0
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect

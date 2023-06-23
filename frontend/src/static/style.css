@@ -98,7 +98,7 @@ body {
 .default-template{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 /* ---------------------------------------------------
@@ -343,7 +343,7 @@ a[data-toggle="collapse"] {
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 1130px) {
+@media (max-width: 970px) {
     #sidebarCollapse span {
         display: none;
     }

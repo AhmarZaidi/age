@@ -19,7 +19,7 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export var cookies;
+// export var cookies;
 
 // export const connectToDatabase = createAsyncThunk(
 //   'database/connectToDatabase',
@@ -97,7 +97,7 @@ export const connectToDatabase = createAsyncThunk(
       });
       if (response.ok) {
         console.log("Connect Response: ", response);
-        console.log("Connect Response Get Cookie: ", response.headers.get('Set-Cookie'));
+        // console.log("Connect Response Get Cookie: ", response.headers.get('Set-Cookie'));
         // console.log("Connect Response Headers: ", response.headers);
         // cookies = response.headers.get('Custom-Set-Cookie'); // Save the cookies from the response
         return await response.json();
@@ -132,7 +132,7 @@ export const disconnectToDatabase = createAsyncThunk(
     })
       .then(response => {
         console.log("Disconnect Response: ", response);
-        cookies = ""; // Clear the cookies variable
+        // cookies = ""; // Clear the cookies variable
         return response.json();
       })
       .then(data => {
