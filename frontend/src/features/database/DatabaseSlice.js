@@ -19,59 +19,6 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-// export var cookies;
-
-// export const connectToDatabase = createAsyncThunk(
-//   'database/connectToDatabase',
-//   async (formData) => {
-//     formData.port = parseInt(formData.port);
-//     const appendForm = {
-//       ssl: 'disable',
-//       graph_init: false,
-//       version: 11,
-//     };
-
-//     formData = { ...formData, ...appendForm };
-
-//     try {
-//       // const response = await fetch('http://localhost:8081/connect', {
-//       fetch('/api/connect', {
-//         method: 'POST',
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(formData),
-//       })
-//       .then((response) => {
-//         console.log("Connect Response: ", response);
-//         // console.log("Connect Response Get Cookie: ", response.headers.get('Set-Cookie'));
-//         // cookies = response.headers.get('Custom-Set-Cookie'); // Save the cookies from the response
-//         return response.json();
-//       })
-
-
-//       if (response.ok) {
-//         console.log("Connect Response: ", response);
-//         console.log("Connect Response Get Cookie: ", response.headers.get('Set-Cookie'));
-//         // console.log("Connect Response Headers: ", response.headers);
-//         // cookies = response.headers.get('Custom-Set-Cookie'); // Save the cookies from the response
-//         // return await response.json();
-//       }
-//       throw response;
-//     } catch (error) {
-//       const errorJson = await error.json();
-//       console.log("Connect Error: ", errorJson);
-//       const errorDetail = {
-//         name: 'Failed to Retrieve Connection Information',
-//         message: `[${errorJson.severity}]:(${errorJson.code}) ${errorJson.message} `,
-//         statusText: error.statusText,
-//       };
-//       throw errorDetail;
-//     }
-//   }
-// );
-
 
 export const connectToDatabase = createAsyncThunk(
   'database/connectToDatabase',
@@ -86,7 +33,7 @@ export const connectToDatabase = createAsyncThunk(
     const updateFormData = { ...formData, ...appendForm };
 
     try {
-      // const response = await fetch('http://localhost:8081/connect', {
+      // const response = await fetch('http://localhost:8081/api/connect', {
       const response = await fetch('/api/connect', {
         method: 'POST',
         headers: {
@@ -121,7 +68,7 @@ export const disconnectToDatabase = createAsyncThunk(
   'database/disconnectToDatabase',
   async () => {
     // console.log("Cookies DatabaseSlice.js: ", cookies)
-    // fetch('http://localhost:8081/disconnect', {
+    // fetch('http://localhost:8081/api/disconnect', {
     fetch('api/disconnect', {
       method: 'POST',
       headers: {
@@ -148,7 +95,7 @@ export const getConnectionStatus = createAsyncThunk(
   'database/getConnectionStatus',
   async () => {
     try {
-      // const response = await fetch('http://localhost:8080/status', {
+      // const response = await fetch('http://localhost:8081/api/status', {
       const response = await fetch('/api/status', {
         method: 'GET',
         headers: {

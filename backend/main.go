@@ -18,6 +18,7 @@ func main() {
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+		AllowMethods: []string{echo.GET, echo.POST, echo.DELETE, echo.PUT},
 	}))
 	gob.Register(models.Connection{})
 	app.Use(session.UserSessions())

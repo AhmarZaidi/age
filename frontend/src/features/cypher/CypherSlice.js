@@ -72,6 +72,7 @@ export const executeCypherQuery = createAsyncThunk(
   'cypher/executeCypherQuery',
   async (args, thunkAPI) => {
     try {
+      // const response = await fetch('http://localhost:8081/api/query',
       const response = await fetch('/api/query',
         {
           method: 'POST',
@@ -84,12 +85,13 @@ export const executeCypherQuery = createAsyncThunk(
         });
       if (response.ok) {
         const res = await response.json();
+        console.log("QUERY RESULT res:", res)
 
         // console.log("QUERY RESULT:", { key: args[0], query: args[1], ...res })
         // return { key: args[0], query: args[1], ...res };
 
         const result = convertJsonStructure({ key: args[0], query: args[1], ...res });
-        console.log("QUERY RESULT:", result)
+        // console.log("QUERY RESULT:", result)
         // return { key: args[0], query: args[1], ...res };
         return result;
       }
