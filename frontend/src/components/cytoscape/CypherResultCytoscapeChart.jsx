@@ -207,7 +207,8 @@ const CypherResultCytoscapeCharts = ({
                 }
               }, 1000);
 
-              fetch('/api/query', {
+              // fetch('/api/query', {
+              fetch('http://localhost:8081/api/query', {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',

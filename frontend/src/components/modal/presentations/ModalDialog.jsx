@@ -34,7 +34,8 @@ const ModalDialog = ({
   const dispatch = useDispatch();
 
   const removeNode = () => {
-    fetch('/api/query',
+    // fetch('/api/query',
+    fetch('http://localhost:8081/api/query',
       {
         method: 'POST',
         headers: {

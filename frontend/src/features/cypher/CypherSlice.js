@@ -46,27 +46,27 @@ const validateVlePathVariableReturn = (cypherQuery) => {
   }
 };
 
-function convertJsonStructure(inputJson) {
-  const outputJson = {};
-  outputJson.key = inputJson.key;
-  outputJson.query = inputJson.query;
+// function convertJsonStructure(inputJson) {
+//   const outputJson = {};
+//   outputJson.key = inputJson.key;
+//   outputJson.query = inputJson.query;
 
-  const rows = [];
-  for (let i = 0; i < Object.keys(inputJson).length - 2; i++) {
-    const row = {};
-    row.v = JSON.parse(inputJson[i][0].split("::")[0]);
-    row.r = JSON.parse(inputJson[i][1].split("::")[0]);
-    row.v2 = JSON.parse(inputJson[i][2].split("::")[0]);
-    rows.push(row);
-  }
+//   const rows = [];
+//   for (let i = 0; i < Object.keys(inputJson).length - 2; i++) {
+//     const row = {};
+//     row.v = JSON.parse(inputJson[i][0].split("::")[0]);
+//     row.r = JSON.parse(inputJson[i][1].split("::")[0]);
+//     row.v2 = JSON.parse(inputJson[i][2].split("::")[0]);
+//     rows.push(row);
+//   }
 
-  outputJson.rows = rows;
-  outputJson.columns = ['v', 'r', 'v2'];
-  outputJson.rowCount = rows.length;
-  outputJson.command = 'SELECT';
+//   outputJson.rows = rows;
+//   outputJson.columns = ['v', 'r', 'v2'];
+//   outputJson.rowCount = rows.length;
+//   outputJson.command = 'SELECT';
 
-  return outputJson;
-}
+//   return outputJson;
+// }
 
 export const executeCypherQuery = createAsyncThunk(
   'cypher/executeCypherQuery',
@@ -87,13 +87,13 @@ export const executeCypherQuery = createAsyncThunk(
         const res = await response.json();
         console.log("QUERY RESULT res:", res)
 
-        // console.log("QUERY RESULT:", { key: args[0], query: args[1], ...res })
-        // return { key: args[0], query: args[1], ...res };
+        console.log("QUERY RESULT:", { key: args[0], query: args[1], ...res })
+        return { key: args[0], query: args[1], ...res };
 
-        const result = convertJsonStructure({ key: args[0], query: args[1], ...res });
+        // const result = convertJsonStructure({ key: args[0], query: args[1], ...res });
         // console.log("QUERY RESULT:", result)
         // return { key: args[0], query: args[1], ...res };
-        return result;
+        // return result;
       }
       throw response;
     } catch (error) {

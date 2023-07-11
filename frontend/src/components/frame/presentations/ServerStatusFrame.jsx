@@ -76,7 +76,7 @@ const ServerStatusFrame = ({
                 </p>
                 <p>
                   Graph path has been set to&nbsp;
-                  <strong>{graph}</strong>
+                  <strong>{graph[0]}</strong>
                 </p>
               </Col>
               <Col>
